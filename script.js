@@ -16,6 +16,7 @@ const ctx = canvas.getContext('2d');
 // variables. note the use of let vs var - in this case it doesn't affect much. These are not initialised
 // there seems to be some consensus over preferencing let over var since its introduction - will read up more
 let score;
+let wscore;
 let scoreText;
 let highscore;
 let highscoreText;
@@ -59,7 +60,7 @@ class Player {
       this.c = c;
   
       this.dy = 0;
-      this.jumpForce = 15;
+      this.jumpForce = 14;
       this.originalHeight = h;
       this.grounded = false;
       this.jumpTimer = 0;
@@ -125,10 +126,10 @@ class Player {
     // for now I have entered the pixel values in manually, but this can be factored out
     Draw () {
         // OLD CODE FOR RED SQUARE PLAYER (now hitbox)
-        ctx.beginPath();
-        ctx.fillStyle = this.c;
-        ctx.fillRect(this.x, this.y, this.w, this.h);
-        ctx.closePath();
+        // ctx.beginPath();
+        // ctx.fillStyle = this.c;
+        // ctx.fillRect(this.x, this.y, this.w, this.h);
+        // ctx.closePath();
         // END OF OLD CODE
 
         // here I started with manually drawing the running frames
@@ -298,11 +299,12 @@ function Update () {
   player.Animate();
 
   score++;
-  scoreText.t = "Score: " + score;
+  wscore = Math.floor(score/10)
+  scoreText.t = "Score: " + wscore;
   scoreText.Draw();
 
-  if (score > highscore) {
-    highscore = score;
+  if (wscore > highscore) {
+    highscore = wscore;
     highscoreText.t = "Highscore: " + highscore;
   }
   
