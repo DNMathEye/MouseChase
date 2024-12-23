@@ -25,7 +25,8 @@ let gravity;
 let obstacles = [];
 let gameSpeed;
 let keys = {};
-let touch = false;
+let touchleft = false;
+let touchright = false;
 let frameX = 0;
 let frameY = 0;
 let gameFrame = 0;
@@ -49,10 +50,18 @@ document.addEventListener('keyup', function (evt) {
   keys[evt.code] = false;
 });
 document.addEventListener('touchstart', function (evt) {
-  touch = true;
+  evt.preventDefault();
+  let touch = evt.touches[0];
+  if (2 * touch.pageX > document.body.clientWidth) {
+    touchright = true;
+  }
+  else {
+    touchleft = true;
+  }
 });
 document.addEventListener('touchend', function (evt) {
-  touch = false;
+  touchleft = false;
+  touchright = false;
 });
 
   
@@ -75,7 +84,7 @@ class Player {
   
     Animate () {
       // Jump - if one of the jump keys is pressed, activate jump()
-      if (keys['Space'] || keys['KeyW'] || touch == true) {
+      if (keys['Space'] || keys['KeyW'] || touchright == true) {
         this.Jump();
       } else {
         this.jumpTimer = 0;
@@ -144,7 +153,7 @@ class Player {
         // interestingly, the original code doesn't need to refer to frames at all
         let framePosition = Math.floor(gameFrame/staggerFrames)%16
         frameX = spriteWidth * framePosition
-        if (keys['ShiftLeft'] || keys['KeyS']) {
+        if (keys['ShiftLeft'] || keys['KeyS'] || touchleft == true) {
             frameY =2;
           } else {
           }
