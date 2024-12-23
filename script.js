@@ -91,7 +91,7 @@ class Player {
       }
   
       //originally this also changed the drawn box that represented the player. I keep it as a hit box
-      if (keys['ShiftLeft'] || keys['KeyS']) {
+      if (keys['ShiftLeft'] || keys['KeyS'] || touchleft == true) {
         this.h = this.originalHeight / 2;
       } else {
         this.h = this.originalHeight;
