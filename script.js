@@ -25,6 +25,7 @@ let gravity;
 let obstacles = [];
 let gameSpeed;
 let keys = {};
+let touch = false;
 let frameX = 0;
 let frameY = 0;
 let gameFrame = 0;
@@ -47,6 +48,12 @@ document.addEventListener('keydown', function (evt) {
 document.addEventListener('keyup', function (evt) {
   keys[evt.code] = false;
 });
+document.addEventListener('touchstart', function (evt) {
+  touch = true;
+});
+document.addEventListener('touchend', function (evt) {
+  touch = false;
+});
 
   
 //
@@ -68,7 +75,7 @@ class Player {
   
     Animate () {
       // Jump - if one of the jump keys is pressed, activate jump()
-      if (keys['Space'] || keys['KeyW']) {
+      if (keys['Space'] || keys['KeyW'] || touch == true) {
         this.Jump();
       } else {
         this.jumpTimer = 0;
